@@ -1,15 +1,15 @@
 {
   @html(<b>)
-  ActiveX support
+  Suporte a ActiveX
   @html(</b>)
   - Copyright 2004-2019 (c) Teppi Technology (https://rtc.teppi.net)
-  @html(<br><br>)  
-  
-  Include this unit somewhere in your Project if you are using 
-  ActiveX objects in multi-threaded RTC Applications.
-  
-  This unit creates and registers a Thread Callback to automatically call 
-  "CoInitialize" when starting RTC Threads and "CoUnInitialize" when closing them.
+  @html(<br><br>)
+
+  Inclua esta unidade em algum lugar do seu Projeto se estiver usando
+  objetos ActiveX em Aplicações RTC multi-thread.
+
+  Esta unidade cria e registra um Callback de Thread para chamar automaticamente
+  "CoInitialize" ao iniciar Threads RTC e "CoUnInitialize" ao encerrá-las.
 }
 unit rtcActiveX;
 
@@ -22,16 +22,16 @@ uses
   rtcTypes, rtcLog, rtcThrPool;
 
 type
-  { An instance of the "TRtcActiveX" class will be created and registered
-    as RTC Thread Callback if this (rtcActiveX) unit is used anywhere in the 
-    Project, to automatically call "CoInitialize" when starting RTC Threads 
-    and "CoUnInitialize" when closing them. }
+  { Uma instância da classe "TRtcActiveX" será criada e registrada
+    como Callback de Thread RTC se esta unidade (rtcActiveX) for usada em qualquer lugar do
+    Projeto, para chamar automaticamente "CoInitialize" ao iniciar Threads RTC
+    e "CoUnInitialize" ao encerrá-las. }
   TRtcActiveX=class(TRtcThreadCallback)
     procedure AfterThreadStart; override;
-    { Called from inside each Thread, before it will be stopped/destroyed }
+    { Chamado dentro de cada Thread, antes de ser parada/destruída }
     procedure BeforeThreadStop; override;
-    { Callled after all threads have been stopped.
-      This is the method from which you should destroy the object by calling "Free" }
+    { Chamado após todas as threads terem sido encerradas.
+      Este é o método no qual você deve destruir o objeto chamando "Free" }
     procedure DestroyCallback; override;
     end;
 

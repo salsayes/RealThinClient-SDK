@@ -1,10 +1,10 @@
 {
   @html(<b>)
-  Memory Check Unit
+  Unidade de Verificação de Memória
   @html(</b>)
   - Copyright 2004-2019 (c) Teppi Technology (https://rtc.teppi.net)
   @html(<br><br>)
-  
+
   @exclude
 }
 unit rtcMemory;
@@ -13,13 +13,13 @@ unit rtcMemory;
 
 interface
 
-{ Get Complete Heap Status }
+{ Obter o Status Completo do Heap }
 function Get_HeapStatus:THeapStatus;
 
-{ Check the ammount of memoy in use (bytes) }
+{ Verificar a quantidade de memória em uso (bytes) }
 function Get_MemoryInUse:int64;
 
-{ Check how much Address Space is used by the Application (KB) }
+{ Verificar quanto Espaço de Endereço é usado pela Aplicação (KB) }
 function Get_AddressSpaceUsed:int64;
 
 implementation
@@ -36,11 +36,11 @@ function Get_AddressSpaceUsed: int64;
   var
     LMemoryStatus: TMemoryStatus;
   begin
-  {Set the structure size}
+  {Define o tamanho da estrutura}
   LMemoryStatus.dwLength := SizeOf(LMemoryStatus);
-  {Get the memory status}
+  {Obtém o status da memória}
   GlobalMemoryStatus(LMemoryStatus);
-  {The result is the total address space less the free address space}
+  {O resultado é o espaço total de endereços menos o espaço livre}
   Result := (LMemoryStatus.dwTotalVirtual - LMemoryStatus.dwAvailVirtual) shr 10;
   end;
   
@@ -50,7 +50,7 @@ function Get_AddressSpaceUsed: int64;
   var
     hs :THeapStatus;
   begin
-  // no funciton available?
+  // nenhuma função disponível?
   hs := GetHeapStatus;
   Result := hs.TotalCommitted
   end;

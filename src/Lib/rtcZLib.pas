@@ -1,30 +1,30 @@
 {*****************************************************************************
-*  This is a modified version of "ZLibEx.pas" from base2 technologies        *
+*  Esta é uma versão modificada de "ZLibEx.pas" da base2 technologies        *
 *                                                                            *
 *  Copyright (c) 2004-2019 Teppi Technology (https://rtc.teppi.net)          *
 *  copyright (c) 2000-2005 base2 technologies                                *
 *  copyright (c) 1997 Borland International                                  *
 *                                                                            *
-*  acknowledgements                                                          *
+*  agradecimentos                                                            *
 *    erik turner                                                             *
-*      Z*Stream routines                                                     *
+*      Rotinas Z*Stream                                                      *
 *                                                                            *
 *    burak kalayci                                                           *
-*      informing me about the zlib 1.1.4 update and the 1.2.1 update         *
+*      por avisar sobre as atualizações do zlib 1.1.4 e 1.2.1                *
 *                                                                            *
-*    vicente s�nchez-alarcos                                                 *
-*      informing me about the zlib 1.2.2 update                              *
+*    vicente sánchez-alarcos                                                 *
+*      por avisar sobre a atualização do zlib 1.2.2                          *
 *                                                                            *
 *    luigi sandon                                                            *
-*      pointing out the missing loop condition (Z_STREAM_END) in             *
-*        ZInternalCompressStream and ZInternalDecompressStream               *
+*      por apontar a condição de loop ausente (Z_STREAM_END) em              *
+*        ZInternalCompressStream e ZInternalDecompressStream                 *
 *                                                                            *
 *    ferry van genderen                                                      *
-*      assiting me fine tune and beta test ZInternalCompressStream and       *
+*      por ajudar a ajustar e testar ZInternalCompressStream e               *
 *        ZInternalDecompressStream                                           *
 *                                                                            *
 *    mathijs van veluw                                                       *
-*      informing me about the zlib 1.2.3 update                              *
+*      por avisar sobre a atualização do zlib 1.2.3                          *
 *****************************************************************************
 @exclude
 }
@@ -49,13 +49,13 @@ function ZCompress_Str(const inBuffer: RtcString; level: TZCompressionLevel):Rtc
 function ZDecompress_Str(const inBuffer: RtcString; inSize:integer=0):RtcString; overload; deprecated;
 {$ENDIF}
 
-{ inBuffer = buffer to compress
-  level = compression level
-  inSize = number of bytes to compress from inBuffer (0=all) }
+{ inBuffer = buffer para comprimir
+  level = nível de compressão
+  inSize = número de bytes a comprimir de inBuffer (0=todo) }
 function ZCompress_Ex(const inBuffer: RtcByteArray; level: TZCompressionLevel; inSize:integer=0):RtcByteArray; overload;
 
-{ inBuffer = buffer to decompress
-  inSize = number of bytes to decompress from inBuffer (0=all) }
+{ inBuffer = buffer para descomprimir
+  inSize = número de bytes a descomprimir de inBuffer (0=todo) }
 function ZDecompress_Ex(const inBuffer: RtcByteArray; inSize:integer=0):RtcByteArray; overload;
 
 implementation
