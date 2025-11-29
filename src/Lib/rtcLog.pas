@@ -1,11 +1,11 @@
-{
+{ 
   @html(<b>)
-  Log File Creation
+  Criação de Arquivo de Log
   @html(</b>)
   - Copyright 2004-2019 (c) Teppi Technology (https://rtc.teppi.net)
   @html(<br><br>)
 
-  This unit gives you thread-safe Log writing support.
+  Esta unidade fornece suporte para gravação de Log com segurança para threads.
 }
 unit rtcLog;
 
@@ -33,111 +33,110 @@ uses
   rtcSrcList;
 
 var
-  { Write Logged exception into the Log file?
-    Dafault=True. By changing this to False will remove any
-    Connection component exceptions from the Log file. }
+  { Registrar exceções no arquivo de Log?
+    Padrão=True. Alterar para False remove as exceções
+    dos componentes de conexão do arquivo de Log. }
   LOG_EXCEPTIONS:boolean=True;
 
-  { Write all "Log" calls to the CONSOLE (stdout)? }
+  { Registrar todas as chamadas "Log" no CONSOLE (stdout)? }
   LOG_TO_CONSOLE:boolean=False;
 
-  { Write all "xLog" calls to the CONSOLE (stdout)? }
+  { Registrar todas as chamadas "xLog" no CONSOLE (stdout)? }
   XLOG_TO_CONSOLE:boolean=False;
 
-  { The RTC SDK can silently handle most exceptions which
-    would otherwise cause the components to stop working.
-    This is a safety-net which ensures that even bugs in
-    the RTC SDK do not cause your apps to crash, but an
-    exception getting that far down to the RTC SDK usually
-    means something is wrong in the RTC SDK.
-    When debugging the RTC SDK, LOG_AV_ERRORS should be
-    TRUE in order for all abnormal exceptions to be logged. }
+  { O RTC SDK pode tratar silenciosamente a maioria das exceções
+    que, de outra forma, fariam os componentes pararem de funcionar.
+    Este é um mecanismo de segurança que garante que até bugs no
+    RTC SDK não derrubem seus aplicativos, mas uma exceção chegando
+    até aqui normalmente significa que há algo errado no RTC SDK.
+    Ao depurar o RTC SDK, LOG_AV_ERRORS deve ser TRUE para que
+    todas as exceções anormais sejam registradas. }
   LOG_AV_ERRORS:boolean={$IFDEF RTC_DEBUG}True{$ELSE}False{$ENDIF};
 
-  { If you want old log files to be deleted after several days,
-    you can specify how long (in days) files should be kept.
-    If this variable is 0 (default), log files will NOT be deleted. }
+  { Se quiser que arquivos antigos de log sejam apagados após alguns dias,
+    defina por quantos dias (em dias) os arquivos devem ser mantidos.
+    Se esta variável for 0 (padrão), os arquivos de log NÃO serão apagados. }
   RTC_LOGS_LIVE_DAYS:integer=0;
 
-  { Sub-Folder inside AppFileName's directory where all LOG files will be stored.
-    If you want LOG files to be created in the same folder as AppFile (EXE/DLL),
-    set LOG_FOLDER to an empty String before calling "StartLog".
-    For this value to have any effect, you need to set it before calling "StartLog". }
+  { Subpasta dentro do diretório de AppFileName onde todos os arquivos de LOG serão armazenados.
+    Se quiser criar os arquivos de LOG na mesma pasta do AppFile (EXE/DLL),
+    defina LOG_FOLDER como uma string vazia antes de chamar "StartLog".
+    Para que este valor tenha efeito, ele precisa ser definido antes de "StartLog". }
   LOG_FOLDER:RtcWideString='LOG';
 
-  { Full path to the LOG folder. If you leave this variable empty (default),
-    it will be initialized automatically by using the AppFileName and LOG_FOLDER
-    variables, immediately before the first log entry needs to be written.
-    If you want your LOG files written to a specific folder by using full path,
-    you can do it by setting this variable before the first Log entry is written.
-    RTC_LOG_FOLDER should ALWAYS end with '\' on Windows and '/' on other platforms. }
+  { Caminho completo para a pasta de LOG. Se deixar esta variável vazia (padrão),
+    ela será inicializada automaticamente usando AppFileName e LOG_FOLDER
+    imediatamente antes de a primeira entrada de log ser gravada.
+    Se quiser que os arquivos de LOG sejam gravados em uma pasta específica
+    usando o caminho completo, defina esta variável antes da primeira entrada.
+    RTC_LOG_FOLDER deve SEMPRE terminar com '\' no Windows e '/' em outras plataformas. }
   RTC_LOG_FOLDER:RtcWideString='';
 
-  { String used to format Date/Time output in RTC LOG. For more information on valid Data/Time
-    format strings, please refer to Delphi help about the "FormatDataTime" function. }
+  { String usada para formatar a data/hora no LOG do RTC. Para mais informações sobre
+    formatos válidos de data/hora, consulte a ajuda do Delphi para a função "FormatDateTime". }
   RTC_LOG_DATETIMEFORMAT:String='yyyy-mm-dd hh:nn:ss.zzz; ';
 
-  { Include CurrentThreadID in every LOG entry? }
+  { Incluir CurrentThreadID em cada entrada de LOG? }
   RTC_LOG_THREADID:boolean=False;
 
 {$IFDEF RTC_BYTESTRING}
-{ Write exception with a short description into the Global App Log file.
-  This procedure will have no effect if Log writer not started
-  (by calling StartLog) or LOG_EXCEPTIONS is @false }
+{ Registrar exceção com uma breve descrição no arquivo de Log global do aplicativo.
+  Este procedimento não terá efeito se o Log não tiver sido iniciado
+  (chamando StartLog) ou se LOG_EXCEPTIONS for @false }
 procedure Log(const s:RtcString; E:Exception; const name:String=''); overload;
 
-{ Write message into the Global App Log file.
-  This procedure will have no effect if Log writer not started. }
+{ Registrar mensagem no arquivo de Log global do aplicativo.
+  Este procedimento não terá efeito se o Log não tiver sido iniciado. }
 procedure Log(const s:RtcString; const name:String=''); overload;
 
-{ Write message into the Log file for the current date.
-  This procedure will have no effect if Log writer not started. }
+{ Registrar mensagem no arquivo de Log para a data atual.
+  Este procedimento não terá efeito se o Log não tiver sido iniciado. }
 procedure XLog(const s:RtcString; const name:String=''); overload;
 {$ENDIF}
 
-{ Copy LOG file "fromName" to LOG file "toName". }
+{ Copiar o arquivo de LOG "fromName" para o arquivo de LOG "toName". }
 procedure Copy_Log(const fromName,toName:String);
 
-{ Delete LOG file "name" }
+{ Excluir arquivo de LOG "name" }
 procedure Delete_Log(const name:String);
 
-{ Write exception with a short description into the Global App Log file.
-  This procedure will have no effect if Log writer not started
-  (by calling StartLog) or LOG_EXCEPTIONS is @false }
+{ Registrar exceção com uma breve descrição no arquivo de Log global do aplicativo.
+  Este procedimento não terá efeito se o Log não tiver sido iniciado
+  (chamando StartLog) ou se LOG_EXCEPTIONS for @false }
 procedure Log(const s:RtcWideString; E:Exception; const name:String=''); overload;
 
-{ Write message into the Global App Log file.
-  This procedure will have no effect if Log writer not started. }
+{ Registrar mensagem no arquivo de Log global do aplicativo.
+  Este procedimento não terá efeito se o Log não tiver sido iniciado. }
 procedure Log(const s:RtcWideString; const name:String=''); overload;
 
-{ Write message into the Log file for the current date.
-  This procedure will have no effect if Log writer not started. }
+{ Registrar mensagem no arquivo de Log para a data atual.
+  Este procedimento não terá efeito se o Log não tiver sido iniciado. }
 procedure XLog(const s:RtcWideString; const name:String=''); overload;
 
-{ Before Log() procedures will have any effect,
-  you have to call this procedure to start the Log writer.
-  Without it, no Log file. }
+{ Para que os procedimentos Log() tenham efeito,
+  é preciso chamar este procedimento para iniciar o escritor de Log.
+  Sem isso, não há arquivo de Log. }
 procedure StartLog;
 
-{ To stop Log file creation, simply call this procedure.
-  To continue log writing, call StartLog. }
+{ Para parar a criação de arquivos de Log, chame este procedimento.
+  Para continuar a gravação, chame StartLog. }
 procedure StopLog;
 
-{ Start using Buffers for Logging, which makes logging a lot faster.
-  "MaxSize" is the maximum size (in bytes) the LOG may occupy
-  in memory before it has to be dumped to files. @html(<br><br>)
+{ Iniciar o uso de Buffers para Log, o que torna o registro muito mais rápido.
+  "MaxSize" é o tamanho máximo (em bytes) que o LOG pode ocupar
+  na memória antes de precisar ser gravado em arquivos. @html(<br><br>)
 
-  IMPORTANT!!! When using Buffers for logging, the "name" parameter is case-sensitive,
-  which means that a separte Buffer will be created for 'XName' than for 'xname', but
-  both buffers will at the end be dumbed into the same file, so you have to be careful
-  when using the "name" parameter to always use the exact same value for all LOG entries
-  which need to go to the same file, or the order of log entries could get mixed up. }
+  IMPORTANTE!!! Ao usar buffers para log, o parâmetro "name" diferencia maiúsculas de minúsculas,
+  o que significa que um buffer separado será criado para 'XName' e para 'xname', mas
+  ambos serão gravados no mesmo arquivo no final. Por isso, tenha cuidado ao usar o
+  parâmetro "name" para sempre fornecer exatamente o mesmo valor para todas as entradas
+  de LOG que precisam ir para o mesmo arquivo, ou a ordem das entradas pode se misturar. }
 procedure StartLogBuffers(MaxSize:longint);
 
-{ Stop using Buffers for Logging. }
+{ Parar de usar buffers para Log. }
 procedure StopLogBuffers;
 
-{ Dump current Log Buffers to files and release log buffer memory. }
+{ Despejar os buffers de Log atuais em arquivos e liberar a memória de buffer. }
 procedure DumpLogBuffers;
 
 implementation
@@ -167,6 +166,8 @@ procedure StopLog;
   if doLog then
     begin
     {$IFDEF RTC_DEBUG} Log('rtcLog STOP.','DEBUG');{$ENDIF}
+    if doBuffers then
+      DumpLogBuffers;
     doLog:=False;
     end;
   end;
@@ -206,7 +207,7 @@ procedure File_AppendEx(const fname:RtcWideString; const Data:RtcByteArray);
       if RTC_LOGS_LIVE_DAYS > 0 then
         Delete_old_logs;
     except
-      // ignore problems with file deletion
+      // ignorar problemas ao excluir arquivos
       end;
     f:=FileCreate(fname);
     end;
@@ -230,7 +231,7 @@ procedure File_Append(const fname:RtcWideString; const Data:RtcString);
       if RTC_LOGS_LIVE_DAYS > 0 then
         Delete_old_logs;
     except
-      // ignore problems with file deletion
+      // ignorar problemas ao excluir arquivos
       end;
     f:=FileCreate(fname);
     end;
@@ -402,7 +403,7 @@ procedure XLog(const s:RtcWideString; const name:String='');
     fname:RtcWideString;
     s2:RtcString;
   begin
-  if not doLog then Exit; // Exit here !!!!
+  if not doLog then Exit; // Sair aqui!!!!
 
   d:=Now;
   if RTC_LOG_DATETIMEFORMAT<>'' then
@@ -441,7 +442,7 @@ procedure Log(const s:RtcWideString; const name:String='');
     fname:RtcWideString;
     s2:RtcString;
   begin
-  if not doLog then Exit; // Exit here !!!!
+  if not doLog then Exit; // Sair aqui!!!!
 
   d:=Now;
   if RTC_LOG_DATETIMEFORMAT<>'' then
@@ -488,7 +489,7 @@ procedure XLog(const s:RtcString; const name:String='');
     fname:RtcWideString;
     s2:RtcString;
   begin
-  if not doLog then Exit; // Exit here !!!!
+  if not doLog then Exit; // Sair aqui!!!!
 
   d:=Now;
   if RTC_LOG_DATETIMEFORMAT<>'' then
@@ -527,7 +528,7 @@ procedure Log(const s:RtcString; const name:String='');
     fname:RtcWideString;
     s2:RtcString;
   begin
-  if not doLog then Exit; // Exit here !!!!
+  if not doLog then Exit; // Sair aqui!!!!
 
   d:=Now;
   if RTC_LOG_DATETIMEFORMAT<>'' then
@@ -574,7 +575,7 @@ procedure Copy_Log(const fromName,toName:String);
     cnt:integer;
   begin
   if not doLog then Exit; // Exit here !!!!
-  if fromName=toName then Exit; // and here !!!!
+  if fromName=toName then Exit; // e aqui!!!!
 
   PrepareLogFolder;
   if fromName='' then fname:='log' else fname:=RtcWideString(fromName)+'.log';
